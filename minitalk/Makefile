@@ -40,18 +40,18 @@ SERVER_OBJ      =   $(SERVER_SRC:$(SRC_DIR)$(SERVER_DIR)%.c=$(OBJ_DIR)$(SERVER_D
 BONUS_CLIENT_OBJ =  $(BONUS_CLIENT_SRC:$(SRC_DIR)$(CLIENT_DIR)%.c=$(OBJ_DIR)$(CLIENT_DIR)%.o)
 BONUS_SERVER_OBJ =  $(BONUS_SERVER_SRC:$(SRC_DIR)$(SERVER_DIR)%.c=$(OBJ_DIR)$(SERVER_DIR)%.o)
 
-OBJ_DIRS        =   $(OBJ_DIR) $(addprefix $(OBJ_DIR), $(CLIENT_DIR) $(SERVER_DIR))
+OBJ_DIRS        =   $(OBJ_DIR) $(addprefix $(OBJ_DIR), $(CLIENT_DIR))
 
-all:                dependecies $(CLIENT_NAME) $(SERVER_NAME) 
+all:                $(LFT_PATH)libft.a $(SERVER_NAME)
 
 # Compilação dos binários principais
 $(CLIENT_NAME):  $(CLIENT_OBJ) | $(OBJ_DIRS)
 					printf 'Compiling $(CLIENT_NAME)\n'
 					$(CC) $(CFLAGS) $(CLIENT_OBJ) -o $@ -I $(INC_DIR)
 
-$(SERVER_NAME):  $(SERVER_OBJ) | $(OBJ_DIRS)
+$(SERVER_NAME):  $(SERVER_SRC)
 					printf 'Compiling $(SERVER_NAME)\n'
-					$(CC) $(CFLAGS) $(SERVER_OBJ) -o $@ -I $(INC_DIR)
+					$(CC) $(CFLAGS) $(SERVER_SRC) -o $@ -I $(INC_DIR) -L$(LFT_PATH) -lft
 
 bonus:              $(BONUS_CLIENT) $(BONUS_SERVER)
 # Compilação dos binários de bônus
@@ -68,9 +68,9 @@ $(OBJ_DIR)$(CLIENT_DIR)%.o: $(SRC_DIR)$(CLIENT_DIR)%.c | $(OBJ_DIRS)
 					printf "Compiling $(CLIENT_NAME) objects... %-33.33s\r" $(notdir $@)
 					$(CC) $(CFLAGS) -c $< -o $@ -I $(INC_DIR)
 
-$(OBJ_DIR)$(SERVER_DIR)%.o: $(SRC_DIR)$(SERVER_DIR)%.c | $(OBJ_DIRS)
-					printf "Compiling $(SERVER_NAME) objects... %-33.33s\r" $(notdir $@)
-					$(CC) $(CFLAGS) -c $< -o $@ -I $(INC_DIR)
+# $(OBJ_DIR)$(SERVER_DIR)%.o: $(SERVER_SRC) $(OBJ_DIRS)
+# 	printf "Compiling $(SERVER_NAME) objects... %-33.33s\r" $(notdir $@)
+# 	$(CC) $(CFLAGS) -c $< -o $@ -I $(INC_DIR)
 
 # Criação dos diretórios de objetos
 $(OBJ_DIRS):
@@ -78,8 +78,8 @@ $(OBJ_DIRS):
 
 # Regras padrão
 
-dependecies:
-					make -C $(LFT_PATH)
+$(LFT_PATH)libft.a:
+					make -s -C $(LFT_PATH)
 
 clean:
 					if [ -d $(OBJ_DIR) ]; then $(RM) $(OBJ_DIR); fi

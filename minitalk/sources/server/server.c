@@ -6,18 +6,22 @@
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 14:30:44 by mfrancis          #+#    #+#             */
-/*   Updated: 2024/07/22 16:24:35 by mfrancis         ###   ########.fr       */
+/*   Updated: 2024/07/26 15:44:08 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minitalk.h"
+// #include "../../includes/minitalk.h"
+#include <minitalk.h>
 
+
+void	sig_handler(int signum, siginfo_t *info, void *context);
 
 int	main(void)
 {
 	struct sigaction	sa;
+	
 
-    malloc(sizeof(char));
+    // malloc(sizeof(char));
 
 	ft_printf("Server PID: %d\n", getpid());
 	sigemptyset(&sa.sa_mask);
@@ -30,13 +34,13 @@ int	main(void)
 		pause();
 	return (0);
 }
-void bin_to_char(int signum, char* c)
-{
-/**
- * if (signum == SIGUSR1) *c = (*c << 1) | 1;
- * else if (signum == SIGUSR2) *c <<= 1;
-*/
-}
+// void bin_to_char(int signum, char* c)
+// {
+// /**
+//  * if (signum == SIGUSR1) *c = (*c << 1) | 1;
+//  * else if (signum == SIGUSR2) *c <<= 1;
+// */
+// }
 
 void	sig_handler(int signum, siginfo_t *info, void *context)
 {

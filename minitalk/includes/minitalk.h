@@ -6,7 +6,7 @@
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 09:17:25 by mfrancis          #+#    #+#             */
-/*   Updated: 2024/07/22 16:24:42 by mfrancis         ###   ########.fr       */
+/*   Updated: 2024/07/26 15:33:16 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <sys/types.h>
+
+
 
 // client
 

@@ -1,0 +1,26 @@
+NAME = server
+
+SOURCE = sources/server/
+
+LIBS = libraries/
+LIBFT = $(addprefix $(LIBS), libft/libft.a)
+
+LINK = -L$(LIBS)libft -lft
+
+COMP = cc -Wall -Wextra -Werror -Iincludes
+
+all: dependencies $(NAME)
+
+$(NAME):
+	$(COMP) $(SOURCE)$(NAME).c -o $(NAME) $(LINK)
+
+dependencies:
+	make -s -C $(LIBS)libft
+
+clean:
+	make -s -C $(LIBS)libft clean
+
+fclean: clean
+	make -s -C $(LIBS)libft fclean
+
+re: fclean all
