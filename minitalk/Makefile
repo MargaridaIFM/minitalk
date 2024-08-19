@@ -42,12 +42,12 @@ BONUS_SERVER_OBJ =  $(BONUS_SERVER_SRC:$(SRC_DIR)$(SERVER_DIR)%.c=$(OBJ_DIR)$(SE
 
 OBJ_DIRS        =   $(OBJ_DIR) $(addprefix $(OBJ_DIR), $(CLIENT_DIR))
 
-all:                $(LFT_PATH)libft.a $(SERVER_NAME)
+all:                $(LFT_PATH)libft.a $(SERVER_NAME) $(CLIENT_NAME)
 
 # Compilação dos binários principais
-$(CLIENT_NAME):  $(CLIENT_OBJ) | $(OBJ_DIRS)
+$(CLIENT_NAME):  $(CLIENT_OBJ) 
 					printf 'Compiling $(CLIENT_NAME)\n'
-					$(CC) $(CFLAGS) $(CLIENT_OBJ) -o $@ -I $(INC_DIR)
+					$(CC) $(CFLAGS) $(CLIENT_OBJ) -o $@ -I $(INC_DIR) -L$(LFT_PATH) -lft
 
 $(SERVER_NAME):  $(SERVER_SRC)
 					printf 'Compiling $(SERVER_NAME)\n'
@@ -57,11 +57,11 @@ bonus:              $(BONUS_CLIENT) $(BONUS_SERVER)
 # Compilação dos binários de bônus
 $(BONUS_CLIENT): $(BONUS_CLIENT_OBJ) | $(OBJ_DIRS)
 					printf 'Compiling $(BONUS_CLIENT)\n'
-					$(CC) $(CFLAGS) $(BONUS_CLIENT_OBJ) -o $@ -I $(INC_DIR)
+					$(CC) $(CFLAGS) $(BONUS_CLIENT_OBJ) -o $@ -I $(INC_DIR) -L$(LFT_PATH) -lft
 
 $(BONUS_SERVER): $(BONUS_SERVER_OBJ) | $(OBJ_DIRS)
 					printf 'Compiling $(BONUS_SERVER)\n'
-					$(CC) $(CFLAGS) $(BONUS_SERVER_OBJ) -o $@ -I $(INC_DIR)
+					$(CC) $(CFLAGS) $(BONUS_SERVER_OBJ) -o $@ -I $(INC_DIR) -L$(LFT_PATH) -lft
 
 # Compilação dos objetos
 $(OBJ_DIR)$(CLIENT_DIR)%.o: $(SRC_DIR)$(CLIENT_DIR)%.c | $(OBJ_DIRS)
