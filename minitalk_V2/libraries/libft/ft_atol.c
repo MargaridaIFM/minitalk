@@ -1,35 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_atol.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/09 13:56:02 by mfrancis          #+#    #+#             */
-/*   Updated: 2024/08/20 14:16:01 by mfrancis         ###   ########.fr       */
+/*   Created: 2024/06/01 12:06:23 by mfrancis          #+#    #+#             */
+/*   Updated: 2024/06/09 18:39:19 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/* Count the size of the string and return that number */
-size_t	ft_strlen(const char *s)
+long	ft_atol(const char *nptr)
 {
-	int	i;
+	long	i;
+	long	neg;
+	long int	final_nr;
 
-	if (!s || !s[0])
-		return(0);
+	neg = 1;
+	final_nr = 0;
 	i = 0;
-	while (s[i])
+	while (nptr[i] == ' ' || (nptr[i] >= 9 && nptr[i] <= 13))
 		i++;
-	return (i);
+	if (nptr[i] == '-' || nptr[i] == '+')
+	{
+		if (nptr[i] == '-')
+			neg *= -1;
+		i++;
+	}
+	while ((nptr[i] >= '0' && nptr[i] <= '9'))
+	{
+		final_nr = (final_nr * 10) + (nptr[i] - '0');
+		i++;
+	}
+	return (final_nr * neg);
 }
-
-/* #include <ctype.h>
-int main()
-{
-	char *str;
-	str = NULL;
-	printf("my: %lu\n", ft_strlen(str));
-	printf("original: %lu\n\n", strlen(str));
-} */

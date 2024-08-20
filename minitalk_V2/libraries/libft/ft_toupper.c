@@ -1,35 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_toupper.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/09 13:56:02 by mfrancis          #+#    #+#             */
-/*   Updated: 2024/08/20 14:16:01 by mfrancis         ###   ########.fr       */
+/*   Created: 2024/04/09 13:58:13 by mfrancis          #+#    #+#             */
+/*   Updated: 2024/04/14 18:51:40 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/* Count the size of the string and return that number */
-size_t	ft_strlen(const char *s)
+/* Change the character to UpperCase.
+Returns the changed character. */
+int	ft_toupper(int c)
 {
-	int	i;
-
-	if (!s || !s[0])
-		return(0);
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
+	if (c >= 'a' && c <= 'z')
+		c -= 32;
+	return (c);
 }
-
-/* #include <ctype.h>
-int main()
+/* int main()
 {
-	char *str;
-	str = NULL;
-	printf("my: %lu\n", ft_strlen(str));
-	printf("original: %lu\n\n", strlen(str));
+	char c = 'C';
+	printf(" %d\n", ft_toupper(c));
 } */

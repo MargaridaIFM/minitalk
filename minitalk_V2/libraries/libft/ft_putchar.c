@@ -1,35 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_putchar.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/09 13:56:02 by mfrancis          #+#    #+#             */
-/*   Updated: 2024/08/20 14:16:01 by mfrancis         ###   ########.fr       */
+/*   Created: 2024/04/09 17:42:33 by mfrancis          #+#    #+#             */
+/*   Updated: 2024/06/10 09:32:37 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/* Count the size of the string and return that number */
-size_t	ft_strlen(const char *s)
+/* Prints a single character
+Returns the length, in this case is 1. */
+int	ft_putchar(char c)
 {
-	int	i;
-
-	if (!s || !s[0])
-		return(0);
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
+	write(1, &c, 1);
+	return (1);
 }
-
-/* #include <ctype.h>
-int main()
-{
-	char *str;
-	str = NULL;
-	printf("my: %lu\n", ft_strlen(str));
-	printf("original: %lu\n\n", strlen(str));
-} */

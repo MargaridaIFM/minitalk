@@ -1,35 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/09 13:56:02 by mfrancis          #+#    #+#             */
-/*   Updated: 2024/08/20 14:16:01 by mfrancis         ###   ########.fr       */
+/*   Created: 2024/04/09 13:54:53 by mfrancis          #+#    #+#             */
+/*   Updated: 2024/04/14 18:30:23 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/* Count the size of the string and return that number */
-size_t	ft_strlen(const char *s)
+/*
+Fill a memory region with a specific value given by the int c
+in n bytes.
+Returns a pointer to the memory region.
+ */
+void	*ft_memset(void *s, int c, size_t n)
 {
-	int	i;
+	size_t	idx;
+	char	*str;
 
-	if (!s || !s[0])
-		return(0);
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
+	str = (char *)s;
+	idx = 0;
+	while (idx < n)
+	{
+		str[idx] = c;
+		idx++;
+	}
+	return (s);
 }
 
-/* #include <ctype.h>
-int main()
+/* int main()
 {
-	char *str;
-	str = NULL;
-	printf("my: %lu\n", ft_strlen(str));
-	printf("original: %lu\n\n", strlen(str));
+	char teste[10];
+	char teste2[10];
+	size_t len = 10;
+	ft_memset(teste, 'I', len);
+	printf("my: %s\n", teste);
 } */

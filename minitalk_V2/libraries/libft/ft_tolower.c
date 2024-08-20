@@ -1,35 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_tolower.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/09 13:56:02 by mfrancis          #+#    #+#             */
-/*   Updated: 2024/08/20 14:16:01 by mfrancis         ###   ########.fr       */
+/*   Created: 2024/04/09 13:58:05 by mfrancis          #+#    #+#             */
+/*   Updated: 2024/04/14 18:50:38 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/* Count the size of the string and return that number */
-size_t	ft_strlen(const char *s)
+/* Change the character to LowerCase.
+Returns the changed character. */
+int	ft_tolower(int c)
 {
-	int	i;
-
-	if (!s || !s[0])
-		return(0);
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
+	if (c >= 'A' && c <= 'Z')
+		c += 32;
+	return (c);
 }
-
-/* #include <ctype.h>
+/* 
 int main()
 {
-	char *str;
-	str = NULL;
-	printf("my: %lu\n", ft_strlen(str));
-	printf("original: %lu\n\n", strlen(str));
+	char c = 'c';
+	printf(" %d\n", ft_tolower (c));
 } */

@@ -6,42 +6,51 @@
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 14:32:50 by mfrancis          #+#    #+#             */
-/*   Updated: 2024/08/20 14:30:48 by mfrancis         ###   ########.fr       */
+/*   Updated: 2024/08/20 18:22:31 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minitalk.h"
 
-static int	control_reception;
-
 int	main(int argc, char *argv[])
 {
-	struct sigaction	sa;
-	int					pid;
-	int					byte;
+	int	pid;
+	int	byte;
 
-    byte = 0;
+	byte = 0;
 	if (argc != 3)
 		print_error_and_exit("You need to pass 2 arguments: PID and a message.\n");
 	pid = check_pid(argv[1]);
-	//ft_printf("PID: %d\n", pid);
-	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = SA_RESTART | SA_SIGINFO;
-	sa.sa_sigaction = sig_handler;
-	if (sigaction(SIGUSR1, &sa, NULL) == -1 || sigaction(SIGUSR2, &sa,
-			NULL) == -1)
-		print_error_and_exit("Error sisgnation\n");
+	if (kill(pid, 0) < 0)
+		return (ft_printf("Error: Invalid PID\n"));
 	while (argv[2][byte])
 	{
-		ft_printf("While antes da conversao %d:\n", byte);
-        char_to_binary(argv[2][byte], pid);
-        byte++;
-	
+		char_to_send(argv[2][byte], pid);
+		byte++;
 	}
-    char_to_binary('\0', pid);
 	return (0);
 }
 
+void	char_to_send(char c, int pid)
+{
+	static int	bit;
+
+	bit = 0;
+	while (bit < 8)
+	{
+		if (c & (1 << bit))
+		{
+			kill(pid, SIGUSR1);
+			// ft_printf("envio Sig1\n");
+		}
+		bit++;
+	}
+}
+void	print_error_and_exit(char *message)
+{
+	ft_putstr_fd(message, 2);
+	exit(1);
+}
 int	check_pid(char *pid_str)
 {
 	int		pid;
@@ -66,97 +75,6 @@ int	check_pid(char *pid_str)
 	return (pid);
 }
 
-void	print_error_and_exit(char *message)
-{
-	ft_putstr_fd(message, 2);
-	exit(1);
-}
-
-void	sig_handler(int signum, siginfo_t *info, void *context)
-{
-	static int	idx;
-
-	(void)context;
-	(void)info;
-	control_reception = 1;
-	idx = 0;
-	if (signum == SIGUSR2)
-		idx++;
-	else if (signum == SIGUSR1)
-		ft_printf("Num of bytes: %d\n", idx / 8);
-}
-
-int	char_to_binary(char c, int pid)
-{
-    int idx;
-	int bit_idx;
-	
-	bit_idx = 7;
-	ft_printf("Char: %c\n", c);
-	ft_printf("bit_idx fora: %d\n", bit_idx);
-	
-	while(bit_idx >= 0)
-	{
-		ft_printf("bit_idx dentro loop: %d\n", bit_idx);
-		idx = 0;
-		
-		if(c & (1 << bit_idx))
-		{
-			kill(pid, SIGUSR1);
-			ft_printf("envio Sig1\n");
-		}
-		else
-		{
-			kill(pid, SIGUSR2);
-			ft_printf("envio Sig2\n");
-		}
-		while(control_reception == 0)
-		{
-			if(idx == 50)
-			{
-				print_error_and_exit("Error: No response from the process.\n");
-			}
-			idx++;
-			usleep(100);
-		}
-		control_reception = 0;
-		bit_idx--;
-	}
-	return(0);
-}
-/*
-int	get_pid_max(void) {
-	FILE *fp;
-	char *line = NULL;
-	int pid_max;
-
-	fp = popen("at /proc/sys/kernel/pid_max"c, "r");
-	if (fp == NULL) {
-		perror("Erro ao abrir o pipe");
-		exit(EXIT_FAILURE);
-	}
-
-	// Lê uma linha da saída do comando usando get_next_line
-	if (get_next_line(fp, &line) == 0) {
-		perror("Erro ao ler o valor de pid_max");
-		pclose(fp);
-		free(line);
-		exit(EXIT_FAILURE);
-	}
-
-	// Fecha o pipe
-	pclose(fp);
-
-	// Converte a string lida para um inteiro
-	pid_max = atoi(line);
-
-	// Libera a memória alocada para a linha
-	free(line);
-
-	return (pid_max);
-}
-
-*/
 /*
 
 [x] star in second

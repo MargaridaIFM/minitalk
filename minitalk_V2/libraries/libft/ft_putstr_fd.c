@@ -1,35 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/09 13:56:02 by mfrancis          #+#    #+#             */
-/*   Updated: 2024/08/20 14:16:01 by mfrancis         ###   ########.fr       */
+/*   Created: 2024/04/09 13:55:10 by mfrancis          #+#    #+#             */
+/*   Updated: 2024/04/15 11:23:04 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/* Count the size of the string and return that number */
-size_t	ft_strlen(const char *s)
+/* Output a string to the given file descriptor.
+Return Value None.
+ */
+void	ft_putstr_fd(char *s, int fd)
 {
-	int	i;
+	int	idx;
 
-	if (!s || !s[0])
-		return(0);
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
+	idx = 0;
+	while (s[idx])
+	{
+		write(fd, &s[idx], 1);
+		idx++;
+	}
 }
-
-/* #include <ctype.h>
-int main()
+/* int main()
 {
-	char *str;
-	str = NULL;
-	printf("my: %lu\n", ft_strlen(str));
-	printf("original: %lu\n\n", strlen(str));
-} */
+    ft_putstr_fd("Hello\n", 1);
+    ft_putstr_fd("Good bye\n",1);
+}
+ */

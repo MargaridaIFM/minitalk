@@ -1,35 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/09 13:56:02 by mfrancis          #+#    #+#             */
-/*   Updated: 2024/08/20 14:16:01 by mfrancis         ###   ########.fr       */
+/*   Created: 2024/04/09 13:52:28 by mfrancis          #+#    #+#             */
+/*   Updated: 2024/04/14 18:35:10 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/* Count the size of the string and return that number */
-size_t	ft_strlen(const char *s)
+/*
+Fill a memory region with a 0 in n bytes.
+Returns a pointer to the memory region.
+ */
+void	ft_bzero(void *s, size_t n)
 {
-	int	i;
-
-	if (!s || !s[0])
-		return(0);
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
+	ft_memset(s, 0, n);
 }
 
-/* #include <ctype.h>
+/* #include <string.h>
 int main()
 {
-	char *str;
-	str = NULL;
-	printf("my: %lu\n", ft_strlen(str));
-	printf("original: %lu\n\n", strlen(str));
+	char teste[5] = "Hello";
+	char teste2[5] = "Hello";
+	size_t len = 5;
+	printf("my: %s\n",teste);
+	ft_bzero(teste, len);
+	printf("my: %s\n",teste);
+	memset(teste2, 0, len);
+	printf("my: %s\n",teste2);
 } */

@@ -6,13 +6,12 @@
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 14:30:44 by mfrancis          #+#    #+#             */
-/*   Updated: 2024/08/20 14:28:35 by mfrancis         ###   ########.fr       */
+/*   Updated: 2024/08/20 18:11:58 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minitalk.h"
 
-static int bits = 0;
 
 int	main(void)
 {
@@ -29,66 +28,64 @@ int	main(void)
 		pause();
 	return (0);
 }
-void binary_to_char(int signum, unsigned char *c)
-{
-	ft_printf("entrou no binary to char:\n");
-	if (signum == SIGUSR1)
-		*c = (*c << 1) | 1;
-	else if (signum == SIGUSR2) 
-		*c <<= 1;
-}
 
-void	sig_handler(int signum, siginfo_t *info, void *context)
+void	sig_handler(int signal, siginfo_t *info, void *context)
 {
-	ft_printf("entrou no sig_handler:\n");
-	static unsigned char c;
-	static int pid_client;
-	static char *client_msg;
+	static int	i;
+	static int	bits;
+	static char	*client_msg;
 
+	(void)info;
 	(void)context;
-	pid_client = info->si_pid;
-	binary_to_char(signum, &c);
-	ft_printf("saiu no binary to char:\n");
+
+	if (!client_msg)
+		client_msg = ft_strdup("");  // Initialize the message
+	if(signal == SIGUSR1)
+		i |= 1 << bits;
 	bits++;
-	ft_printf("bits: %d\n", bits);
 	if(bits == 8)
 	{
-		ft_printf("entrou no loop:\n");
-		if(c)
+		if(i == 0)
 		{
-			client_msg = add_char_to_msg(c, client_msg);
-			ft_printf("client mes: %s\n", client_msg);			
-		}
-		else if(client_msg)
-		{
-			ft_printf("%s\n", client_msg);
-			kill(pid_client, SIGUSR1);
-			//pid_client = 0;
+			ft_printf("%s", client_msg);
 			free(client_msg);
 			client_msg = NULL;
-			return ;
 		}
+		else 
+			add_char_to_msg(i, client_msg);
 		bits = 0;
-		c = 0;
+		i = 0;
 	}
-	kill(pid_client, SIGUSR2);
 }
-char *add_char_to_msg(char c, char *client_msg)
+char *add_char_to_msg(int i, char *client_msg)
 {
 	char *new_msg;
-	size_t len;
+	int len;
 	
 	len = ft_strlen(client_msg);
-	new_msg = malloc(sizeof(char) * (len + 2));
+	new_msg = malloc(sizeof(char) * (len + 1));
 	if(!new_msg)
 	{
 		if(client_msg)
 			free(client_msg);
 		return NULL;
 	}
-	ft_strlcpy(new_msg, &c, len + 2); 
+	concatenate_char(client_msg, new_msg, i);
 	free(client_msg);
 	return(new_msg);
+}
+void	concatenate_char(char *src, char *dst, int i)
+{
+	int j;
+
+	j = 0;
+	while (dst[j])
+	{
+		src[j] = dst[j];
+		j++;
+	}
+	dst[j] = (char)i;
+	dst[j + 1] = '\0';
 }
 
 /*
