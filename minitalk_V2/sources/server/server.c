@@ -6,7 +6,7 @@
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 14:30:44 by mfrancis          #+#    #+#             */
-/*   Updated: 2024/08/20 18:11:58 by mfrancis         ###   ########.fr       */
+/*   Updated: 2024/08/21 19:21:37 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,78 +15,80 @@
 
 int	main(void)
 {
-	struct sigaction	sa;
-	
 	ft_printf("Server PID: %d\n", getpid());
-	sigemptyset(&sa.sa_mask);
-	sa.sa_sigaction = sig_handler;
-	sa.sa_flags = SA_RESTART | SA_SIGINFO;
-	if (sigaction(SIGUSR1, &sa, NULL) == -1 || sigaction(SIGUSR2, &sa, NULL) ==
-		-1)
-		ft_putstr_fd("Error sigaction\n", 2);
+	signal(SIGUSR1, ft_sig_handler);
+	signal(SIGUSR2, ft_sig_handler);
 	while (1)
 		pause();
 	return (0);
 }
 
-void	sig_handler(int signal, siginfo_t *info, void *context)
+void	ft_sig_handler(int signal)
 {
-	static int	i;
-	static int	bits;
-	static char	*client_msg;
+	static int	c = 0;
+	static int	bits = 0;
+	//static char	*client_msg;
 
-	(void)info;
-	(void)context;
-
-	if (!client_msg)
-		client_msg = ft_strdup("");  // Initialize the message
+	// if (!client_msg)
+	// 	client_msg = ft_strdup("");  // Initialize the message
 	if(signal == SIGUSR1)
-		i |= 1 << bits;
-	bits++;
-	if(bits == 8)
-	{
-		if(i == 0)
 		{
-			ft_printf("%s", client_msg);
-			free(client_msg);
-			client_msg = NULL;
+			c |= (1 << bits);
+	//		ft_printf("char = %d\n", c);
+			//bits++;
 		}
-		else 
-			add_char_to_msg(i, client_msg);
-		bits = 0;
-		i = 0;
-	}
-}
-char *add_char_to_msg(int i, char *client_msg)
-{
-	char *new_msg;
-	int len;
 	
-	len = ft_strlen(client_msg);
-	new_msg = malloc(sizeof(char) * (len + 1));
-	if(!new_msg)
+	if(bits++ == 7)
 	{
-		if(client_msg)
-			free(client_msg);
-		return NULL;
+		// ft_printf("Entrou no bits = 8:\n");
+		// if(i == 0)
+		// {
+		// 	ft_printf("%s", client_msg);
+		// 	free(client_msg);
+		// 	client_msg = NULL;
+		// }
+		// else 
+		// 	add_char_to_msg(i, client_msg);
+		write(1, &c, 1);
+		bits = 0;
+		c = 0;
 	}
-	concatenate_char(client_msg, new_msg, i);
-	free(client_msg);
-	return(new_msg);
+	//bits++;
 }
-void	concatenate_char(char *src, char *dst, int i)
-{
-	int j;
+// char *add_char_to_msg(int i, char *client_msg)
+// {
+// 	char *new_msg;
+// 	int len;
+	
+// 	ft_printf("Entrou no add_char_to_msg:\n");
+// 	len = ft_strlen(client_msg);
+// 	new_msg = malloc(sizeof(char) * (len + 2));
+// 	if(!new_msg)
+// 	{
+// 		if(client_msg)
+// 			free(client_msg);
+// 		return NULL;
+// 	}
+// 	concatenate_char(client_msg, new_msg, i);
+// 	printf("%s\n", new_msg);
+// 	free(client_msg);
+// 	return(new_msg);
+// }
+// void	concatenate_char(char *src, char *dst, int i)
+// {
+// 	int j;
 
-	j = 0;
-	while (dst[j])
-	{
-		src[j] = dst[j];
-		j++;
-	}
-	dst[j] = (char)i;
-	dst[j + 1] = '\0';
-}
+// 	j = 0;
+// 	while (dst[j])!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+// 	{
+// 		src[j] = dst[j];
+// 		j++;
+// 	}
+// 	dst[j] = (char)i;
+// 	dst[j + 1] = '\0';
+// 	printf("%s\n", dst);
+// }
 
 /*
 [x] start first

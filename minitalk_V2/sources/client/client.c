@@ -6,7 +6,7 @@
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 14:32:50 by mfrancis          #+#    #+#             */
-/*   Updated: 2024/08/20 18:22:31 by mfrancis         ###   ########.fr       */
+/*   Updated: 2024/08/21 19:18:03 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,29 +21,41 @@ int	main(int argc, char *argv[])
 	if (argc != 3)
 		print_error_and_exit("You need to pass 2 arguments: PID and a message.\n");
 	pid = check_pid(argv[1]);
-	if (kill(pid, 0) < 0)
+	if (pid <= 0)
 		return (ft_printf("Error: Invalid PID\n"));
 	while (argv[2][byte])
 	{
+//		ft_printf("Entrou no while do client:\n");
 		char_to_send(argv[2][byte], pid);
 		byte++;
 	}
 	return (0);
 }
 
-void	char_to_send(char c, int pid)
+void	char_to_send(unsigned char c, int pid)
 {
-	static int	bit;
+	int	bit;
+//	ft_printf("char: %c\n", c);
 
 	bit = 0;
-	while (bit < 8)
+	while (bit <= 7)
 	{
+//		ft_printf("Entrou no loop bits:\n");
+//		ft_printf("%d\n", bit);
 		if (c & (1 << bit))
 		{
 			kill(pid, SIGUSR1);
-			// ft_printf("envio Sig1\n");
+//			ft_printf("envio Sig1\n");
 		}
+		else
+		{
+			kill(pid, SIGUSR2);
+//			ft_printf("envio Sig2\n");
+		}
+		//c = c >> 1;
+		usleep(1000);
 		bit++;
+		
 	}
 }
 void	print_error_and_exit(char *message)
@@ -54,24 +66,17 @@ void	print_error_and_exit(char *message)
 int	check_pid(char *pid_str)
 {
 	int		pid;
-	char	*pid_cpy;
+	int i;
 
-	pid_cpy = pid_str;
 	pid = 0;
-	if (pid_str[0] == '+' && pid_str[1] != '\0')
-		pid_str++;
-	if (pid_str[0] == '-')
-		print_error_and_exit("Error: PID must be a positive number.\n");
-	while (*pid_str)
+	i = 0;
+	while (pid_str[i])
 	{
-		if (!ft_isdigit(*pid_str))
-			print_error_and_exit("Error: PID must be a number.\n");
-		pid_str++;
+		if (!ft_isdigit(pid_str[i]))
+			print_error_and_exit("Error: PID must be just numbers.\n");
+		i++;
 	}
-	pid_str = pid_cpy;
 	pid = ft_atoi(pid_str);
-	// if (pid > 32768)
-	// 	print_error_and_exit("Invalid PID\n");
 	return (pid);
 }
 
