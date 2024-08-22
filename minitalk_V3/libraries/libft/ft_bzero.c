@@ -1,32 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/22 09:17:25 by mfrancis          #+#    #+#             */
-/*   Updated: 2024/08/22 16:35:12 by mfrancis         ###   ########.fr       */
+/*   Created: 2024/04/09 13:52:28 by mfrancis          #+#    #+#             */
+/*   Updated: 2024/04/14 18:35:10 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-# define MINITALK_H
+#include "libft.h"
 
-# include "../libraries/libft/libft.h"
-# include <signal.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <sys/types.h>
-# include <unistd.h>
+/*
+Fill a memory region with a 0 in n bytes.
+Returns a pointer to the memory region.
+ */
+void	ft_bzero(void *s, size_t n)
+{
+	ft_memset(s, 0, n);
+}
 
-// client
-void	char_to_send(unsigned char c, int pid);
-void	print_error_and_exit(char *message);
-int	check_pid(char *pid_str);
-
-// server
-void	ft_sig_handler(int signal);
-
-
-#endif
+/* #include <string.h>
+int main()
+{
+	char teste[5] = "Hello";
+	char teste2[5] = "Hello";
+	size_t len = 5;
+	printf("my: %s\n",teste);
+	ft_bzero(teste, len);
+	printf("my: %s\n",teste);
+	memset(teste2, 0, len);
+	printf("my: %s\n",teste2);
+} */

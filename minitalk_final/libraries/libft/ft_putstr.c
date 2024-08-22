@@ -1,32 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   ft_putstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/22 09:17:25 by mfrancis          #+#    #+#             */
-/*   Updated: 2024/08/22 16:35:12 by mfrancis         ###   ########.fr       */
+/*   Created: 2024/04/09 17:42:56 by mfrancis          #+#    #+#             */
+/*   Updated: 2024/06/10 09:32:37 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-# define MINITALK_H
+#include "libft.h"
 
-# include "../libraries/libft/libft.h"
-# include <signal.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <sys/types.h>
-# include <unistd.h>
+/* Prints the string or “(null)”
+Returns the length of the string or 6 ( nr of characters of (null); */
+int	ft_putstr(char *s)
+{
+	int	idx;
 
-// client
-void	char_to_send(unsigned char c, int pid);
-void	print_error_and_exit(char *message);
-int	check_pid(char *pid_str);
-
-// server
-void	ft_sig_handler(int signal);
-
-
-#endif
+	idx = 0;
+	if (s == NULL)
+	{
+		write(1, "(null)", 6);
+		return (6);
+	}
+	while (s[idx])
+	{
+		write(1, &s[idx], 1);
+		idx++;
+	}
+	return (idx);
+}

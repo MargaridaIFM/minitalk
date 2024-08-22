@@ -6,7 +6,7 @@
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 14:32:50 by mfrancis          #+#    #+#             */
-/*   Updated: 2024/08/22 16:31:10 by mfrancis         ###   ########.fr       */
+/*   Updated: 2024/08/22 18:14:47 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ int	main(int argc, char *argv[])
 
 	byte = 0;
 	if (argc != 3)
-		print_error_and_exit("You need to pass 2 arguments: PID and a message.\n");
+		print_error_and_exit(
+			"You need to pass 2 arguments: PID and a message.\n");
 	pid = check_pid(argv[1]);
 	if (pid <= 0)
 		return (ft_printf("Error: Invalid PID\n"));
@@ -46,11 +47,13 @@ void	char_to_send(unsigned char c, int pid)
 		bit++;
 	}
 }
+
 void	print_error_and_exit(char *message)
 {
 	ft_putstr_fd(message, 2);
 	exit(1);
 }
+
 int	check_pid(char *pid_str)
 {
 	int	pid;
@@ -68,27 +71,23 @@ int	check_pid(char *pid_str)
 	return (pid);
 }
 
+/* in main:
+		char_to_send('\0', pid);
+*/
 /*
-
 [x] star in second
-[x] static int variable - global variable to control if the signal stoped;
 [x]  Takes 2 parametrer
 	[x] PID
 		[x] Parsing
-			[x] check if there are sign + and if after is not empty
-			[x] check if the there are no - sign
 			[x] check if all is digit
 			[x] atoi
-			[x] check if the number is <= pid max
 	[x] message
-[x] clear the signal number with  sigemptyset to prevent error;
 []signal sending:
-	[] send the size of the string - Aqui ??
-		/ variavel global ? ou reallocation memory in server
 	[] enconde the string into bit
-		[] SIGUSR1 = '0'
-		[] SIGUSR2 = '1'
-		[] send the bit using kill ?
+		[] SIGUSR1 = '1'
+		[] SIGUSR2 = increment the bits
+		[] send the bit using kill
 [] Synchronization
-	[] Ensure the client waits appropriately between sending signals to avoid overwhelming the server.
+	[] Ensure the client waits appropriately between sending signals
+		to avoid overwhelming the server.
 */

@@ -1,32 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/22 09:17:25 by mfrancis          #+#    #+#             */
-/*   Updated: 2024/08/22 16:35:12 by mfrancis         ###   ########.fr       */
+/*   Created: 2024/04/09 13:56:02 by mfrancis          #+#    #+#             */
+/*   Updated: 2024/08/22 18:17:08 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-# define MINITALK_H
+#include "libft.h"
 
-# include "../libraries/libft/libft.h"
-# include <signal.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <sys/types.h>
-# include <unistd.h>
+/* Count the size of the string and return that number */
+size_t	ft_strlen(const char *s)
+{
+	int	i;
 
-// client
-void	char_to_send(unsigned char c, int pid);
-void	print_error_and_exit(char *message);
-int	check_pid(char *pid_str);
+	if (!s || !s[0])
+		return (0);
+	i = 0;
+	while (s[i])
+		i++;
+	return (i);
+}
 
-// server
-void	ft_sig_handler(int signal);
-
-
-#endif
+/* #include <ctype.h>
+int	main(void)
+{
+	char *str;
+	str = NULL;
+	printf("my: %lu\n", ft_strlen(str));
+	printf("original: %lu\n\n", strlen(str));
+} */

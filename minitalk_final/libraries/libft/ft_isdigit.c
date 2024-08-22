@@ -1,32 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/22 09:17:25 by mfrancis          #+#    #+#             */
-/*   Updated: 2024/08/22 16:35:12 by mfrancis         ###   ########.fr       */
+/*   Created: 2024/04/09 13:53:26 by mfrancis          #+#    #+#             */
+/*   Updated: 2024/04/14 18:19:43 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-# define MINITALK_H
+#include "libft.h"
 
-# include "../libraries/libft/libft.h"
-# include <signal.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <sys/types.h>
-# include <unistd.h>
+/* Check if the character is a digit
+Returns 1 if the condition is true or 0 if it is not; */
 
-// client
-void	char_to_send(unsigned char c, int pid);
-void	print_error_and_exit(char *message);
-int	check_pid(char *pid_str);
-
-// server
-void	ft_sig_handler(int signal);
-
-
-#endif
+int	ft_isdigit(int c)
+{
+	if (c >= '0' && c <= '9')
+		return (1);
+	return (0);
+}
+/* #include <ctype.h>
+int main()
+{
+	char c = '1';
+	char a = 'a';
+	printf("Original: %d %d\n", isdigit(c), isdigit(a));
+	printf("Mine: %d %d\n",ft_isdigit(c), ft_isdigit(a));
+} */

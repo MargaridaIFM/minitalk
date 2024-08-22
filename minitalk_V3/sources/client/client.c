@@ -6,7 +6,7 @@
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 14:32:50 by mfrancis          #+#    #+#             */
-/*   Updated: 2024/08/22 16:31:10 by mfrancis         ###   ########.fr       */
+/*   Updated: 2024/08/22 17:40:46 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	main(int argc, char *argv[])
 		char_to_send(argv[2][byte], pid);
 		byte++;
 	}
+		char_to_send('\0', pid);
 	return (0);
 }
 
@@ -53,8 +54,8 @@ void	print_error_and_exit(char *message)
 }
 int	check_pid(char *pid_str)
 {
-	int	pid;
-	int	i;
+	int		pid;
+	int i;
 
 	pid = 0;
 	i = 0;

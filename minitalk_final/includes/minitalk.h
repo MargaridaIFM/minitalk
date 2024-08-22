@@ -6,7 +6,7 @@
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 09:17:25 by mfrancis          #+#    #+#             */
-/*   Updated: 2024/08/22 16:35:12 by mfrancis         ###   ########.fr       */
+/*   Updated: 2024/08/22 18:08:16 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@
 // client
 void	char_to_send(unsigned char c, int pid);
 void	print_error_and_exit(char *message);
-int	check_pid(char *pid_str);
+int		check_pid(char *pid_str);
 
 // server
 void	ft_sig_handler(int signal);
-
+// char *add_char_to_msg(int c, char *client_msg);
 
 #endif

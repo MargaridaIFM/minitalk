@@ -1,32 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   ft_putnbr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/22 09:17:25 by mfrancis          #+#    #+#             */
-/*   Updated: 2024/08/22 16:35:12 by mfrancis         ###   ########.fr       */
+/*   Created: 2024/04/09 17:42:49 by mfrancis          #+#    #+#             */
+/*   Updated: 2024/06/10 09:32:37 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-# define MINITALK_H
+#include "libft.h"
 
-# include "../libraries/libft/libft.h"
-# include <signal.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <sys/types.h>
-# include <unistd.h>
+/* Converts a integer into a string using itoa and print it using the putstr,
+ them free the memory allocated by itoa.
+Return the Count the length of the string converted. */
+int	ft_putnbr(int nbr)
+{
+	int		len;
+	char	*str;
 
-// client
-void	char_to_send(unsigned char c, int pid);
-void	print_error_and_exit(char *message);
-int	check_pid(char *pid_str);
-
-// server
-void	ft_sig_handler(int signal);
-
-
-#endif
+	str = ft_itoa(nbr);
+	len = ft_putstr(str);
+	free(str);
+	return (len);
+}
